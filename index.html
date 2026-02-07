@@ -208,7 +208,20 @@
 
       updateLevel();
     });
+document.addEventListener("touchstart", () => {
+  level++;
 
+  if (level === 1) chain.hidden = false;
+  else if (level === 2) sunglasses.hidden = false;
+  else if (level === 3) boombox.hidden = false;
+  else if (level === 4) music.play();
+  else {
+    if (music.paused) music.play();
+    else music.pause();
+  }
+
+  updateLevel();
+});
     resetBtn.addEventListener("click", resetAll);
 
     // Initialize UI state
