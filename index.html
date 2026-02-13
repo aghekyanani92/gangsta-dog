@@ -7,26 +7,41 @@
 
   <style>
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont;
-      background: #fff;
-      margin: 0;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-    }
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  background-image: url("{{ url_for('static', filename='alley.jpeg') }}");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
     .card {
       width: 760px;
-      border: 1px solid #ddd;
+      border: none;
       border-radius: 20px;
       padding: 24px;
       text-align: center;
     }
 
-    h1 {
-      margin-top: 0;
-      font-size: 42px;
-    }
+h1 {
+  margin-top: 0;
+  font-size: 48px;
+  color: #371111;
+  text-shadow:
+    0 0 5px #d85555,
+    0 0 10px #892c2c,
+    0 0 20px #bc2525,
+    0 0 40px #b98080;
+  animation: flicker 2s infinite;
+}
 
     /* ===== STAGE ===== */
     #stage {
@@ -73,7 +88,7 @@
     /* Boombox behind */
     #boombox {
       width: 55%;
-      left: 42%;
+      left: 55%;
       top: 50%;
       z-index: 1;          /* behind dog */
       transform: rotate(-4deg);
@@ -133,16 +148,16 @@
     <div id="stage">
       <div id="dogWrap">
         <!-- Boombox (behind) -->
-        <img id="boombox" class="overlay" src="boombox.png" hidden alt="Boombox">
+        <img id="boombox" class="overlay" src="/static/boombox.png" hidden alt="Boombox">
 
         <!-- Dog -->
-        <img id="base" src="base.png" alt="Dog">
+        <img id="base" src="/static/base.png" alt="Dog">
 
         <!-- Chain -->
-        <img id="chain" class="overlay" src="chain.png" hidden alt="Chain">
+        <img id="chain" class="overlay" src="/static/chain.png" hidden alt="Chain">
 
         <!-- Sunglasses -->
-        <img id="sunglasses" class="overlay" src="sunglasses.png" hidden alt="Sunglasses">
+        <img id="sunglasses" class="overlay" src="/static/sunglasses.png" hidden alt="Sunglasses">
       </div>
     </div>
 
@@ -151,7 +166,7 @@
       <button id="reset">Reset</button>
     </div>
 
-    <audio id="music" src="music.mp3"></audio>
+    <audio id="music" src="/static/music.mp3"></audio>
   </div>
 
   <script>
@@ -208,20 +223,7 @@
 
       updateLevel();
     });
-document.addEventListener("touchstart", () => {
-  level++;
 
-  if (level === 1) chain.hidden = false;
-  else if (level === 2) sunglasses.hidden = false;
-  else if (level === 3) boombox.hidden = false;
-  else if (level === 4) music.play();
-  else {
-    if (music.paused) music.play();
-    else music.pause();
-  }
-
-  updateLevel();
-});
     resetBtn.addEventListener("click", resetAll);
 
     // Initialize UI state
