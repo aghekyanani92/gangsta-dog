@@ -7,21 +7,22 @@
 
   <style>
     body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
 
-  background-image: url("{{ url_for('static', filename='alley.jpeg') }}");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+      /* GitHub Pages path (no Flask/Jinja) */
+      background-image: url("static/alley.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
 
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
     .card {
       width: 760px;
@@ -31,17 +32,23 @@
       text-align: center;
     }
 
-h1 {
-  margin-top: 0;
-  font-size: 48px;
-  color: #371111;
-  text-shadow:
-    0 0 5px #d85555,
-    0 0 10px #892c2c,
-    0 0 20px #bc2525,
-    0 0 40px #b98080;
-  animation: flicker 2s infinite;
-}
+    h1 {
+      margin-top: 0;
+      font-size: 48px;
+      color: #371111;
+      text-shadow:
+        0 0 5px #d85555,
+        0 0 10px #892c2c,
+        0 0 20px #bc2525,
+        0 0 40px #b98080;
+      animation: flicker 2s infinite;
+    }
+
+    /* Neon flicker animation */
+    @keyframes flicker {
+      0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+      20%, 24%, 55% { opacity: 0.4; }
+    }
 
     /* ===== STAGE ===== */
     #stage {
@@ -148,16 +155,16 @@ h1 {
     <div id="stage">
       <div id="dogWrap">
         <!-- Boombox (behind) -->
-        <img id="boombox" class="overlay" src="/static/boombox.png" hidden alt="Boombox">
+        <img id="boombox" class="overlay" src="static/boombox.png" hidden alt="Boombox">
 
         <!-- Dog -->
-        <img id="base" src="/static/base.png" alt="Dog">
+        <img id="base" src="static/base.png" alt="Dog">
 
         <!-- Chain -->
-        <img id="chain" class="overlay" src="/static/chain.png" hidden alt="Chain">
+        <img id="chain" class="overlay" src="static/chain.png" hidden alt="Chain">
 
         <!-- Sunglasses -->
-        <img id="sunglasses" class="overlay" src="/static/sunglasses.png" hidden alt="Sunglasses">
+        <img id="sunglasses" class="overlay" src="static/sunglasses.png" hidden alt="Sunglasses">
       </div>
     </div>
 
@@ -166,7 +173,7 @@ h1 {
       <button id="reset">Reset</button>
     </div>
 
-    <audio id="music" src="/static/music.mp3"></audio>
+    <audio id="music" src="static/music.mp3"></audio>
   </div>
 
   <script>
@@ -183,7 +190,6 @@ h1 {
       levelDisplay.textContent = level;
     }
 
-    // Boombox pulse on/off based on music play state
     function updatePulse() {
       boombox.classList.toggle("pulsing", !music.paused);
     }
@@ -216,7 +222,6 @@ h1 {
       else if (level === 3) boombox.hidden = false;
       else if (level === 4) music.play();
       else {
-        // After final level: toggle music play/pause
         if (music.paused) music.play();
         else music.pause();
       }
@@ -226,7 +231,6 @@ h1 {
 
     resetBtn.addEventListener("click", resetAll);
 
-    // Initialize UI state
     updateLevel();
     updatePulse();
   </script>
